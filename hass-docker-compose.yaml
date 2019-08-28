@@ -1,0 +1,22 @@
+version: "2"
+services:
+  homeassistant:
+    container_name: home-assistant
+    image: homeassistant/raspberrypi3-homeassistant:latest
+    volumes:
+      - /home/pi/homeassistant:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /dev/bus/usb
+      - /var/run/dbus
+    devices:
+      - /dev/gpiomem:/dev/gpiomem
+      - /dev/mem:/dev/mem
+    privileged: true
+    restart: always
+    network_mode: host
+  nodered:
+    container_name: node-red
+    image: nodered/node-red-docker:rpi
+    restart: always
+    ports:
+      - "1880:1880"
